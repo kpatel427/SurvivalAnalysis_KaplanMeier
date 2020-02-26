@@ -1,4 +1,4 @@
-# script to generate survival (KM) plots using expression
+# script to generate survival (KM) plots using gene expression data
 library(reshape2)
 library(data.table)
 library(survival)
