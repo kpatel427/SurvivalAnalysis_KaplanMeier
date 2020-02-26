@@ -37,7 +37,7 @@ survivalKM <- function(exprData, metadata, gene, endpoint, Risk) {
   exprData <- exprData[gene,]
   
   
-  # Step2: Normalizing expression data
+  # Step2: Normalizing expression data ----------------------------------
   # z-score > 1 = high expression
   # z-score < -1 = low expression
   exprData <- data.frame("gene.Z" = apply(X = exprData, MARGIN = 1, FUN = scale))
