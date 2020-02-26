@@ -1,5 +1,4 @@
 # script to generate survival (KM) plots using expression
-#setwd("/Volumes/target_nbl_ngs/KP/RShiny")
 library(reshape2)
 library(data.table)
 library(survival)
@@ -7,30 +6,13 @@ library(survminer)
 library(tidyverse)
 library(dplyr)
 
-# fit <- survfit(Surv(time, status) ~ sex, data = lung) 
-# In the code, time is overall/event-free survival time, status is 0 (alive) or 1 (dead), 
-# instead of sex you will use gene expression binary values for the gene of interest: 0 (low expression) or 1 (high expression)
-# ggsurvplot(fit, data = lung)
+# function call = returns KM plot
+survivalKM(exprData = expression_data, metadata = associated_metadata, endpoint = 'overall survival', Risk = 'All', gene = 'ALK')
 
-
-load('./data/GSE3960_data.RData')
-load('./data/GSE3960_mData.RData')
-
-load('./data/TARGET_NBL_FPKM_PST_data.RData')
-load('./data/TARGET_NBL_FPKM_PST_mData.RData')
-
-
-exprData = TARGET_NBL_FPKM_PST_data
-metadata = TARGET_NBL_FPKM_PST_mData
-gene = 'PHOX2B'
-Risk = 'All'
-endpoint = 'os'
-
-survivalKM(exprData = TARGET_NBL_FPKM_PST_data, metadata = TARGET_NBL_FPKM_PST_mData, endpoint = 'os', Risk = 'All', gene = 'NME1')
-
+# function definition
 survivalKM <- function(exprData, metadata, gene, endpoint, Risk) {
 
-  if(endpoint == "os") {
+  if(endpoint == "overall survival") {
     time <- 'nti_surv_overall'
     status <- 'nti_event_overall_num'
   } else {
@@ -117,9 +99,7 @@ survivalKM <- function(exprData, metadata, gene, endpoint, Risk) {
              risk.table = TRUE, # Add risk table
              risk.table.col = "strata", # Change risk table color by groups
              surv.median.line = "hv", # Specify median survival
-             #ggtheme = theme_Publication_scatter(base_size = 14), # Change ggplot2 theme
-             # legend = "right",
-             # font.x = 14, font.y = 14, font.main = 14, font.legend = 14, font.tickslab = 14,
+             ggtheme = theme_bw(),
              risk.table.fontsize = 5,
              palette = c("#E7B800", "#2E9FDF"),
              title = plotTitle) + xlab('Survival Time')
