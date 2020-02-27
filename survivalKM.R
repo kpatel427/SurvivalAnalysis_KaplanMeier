@@ -74,7 +74,7 @@ survivalKM <- function(exprData, metadata, gene, endpoint, Risk) {
   
   diff <- survdiff(formula = Surv(get(time), get(status)) ~ exprStatus,data = metadata)
   pval <- pchisq(diff$chisq, length(diff$n)-1, lower.tail = FALSE)
-  adjpval <- p.adjust(pval, method = "BH", n = length(gene))
+  adjpval <- p.adjust(pval, method = "fdr",  n = (fit$n[1] + fit$n[2]))
   plotTitle <- paste0(paste(gene, collapse = " | "), " P-val(Adj) :", format(pval, scientific=T, digits=3), "(", format(adjpval, scientific=T, digits=3), ")")
 
 
