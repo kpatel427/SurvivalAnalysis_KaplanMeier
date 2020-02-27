@@ -70,19 +70,13 @@ survivalKM <- function(exprData, metadata, gene, endpoint, Risk) {
 
   # Step4: Comparing survival times between groups ----------------------------------
   # conduct between-group significance tests using a log-rank test
-  # to be conducted when more than 1 gene is selected
-  if(length(gene) > 1){
-    diff <- survdiff(formula = Surv(get(time), get(status)) ~ gene,
-             data = metadata)
+  # to be conducted between high-low expressing groups
   
-    pval <- pchisq(diff$chisq, length(diff$n)-1, lower.tail = FALSE)
-  
-    adjpval <- p.adjust(pval, method = "BH", n = length(gene))
-  
-    plotTitle <- paste0(paste(gene, collapse = " | "), " P-val(Adj) :", format(pval, scientific=T, digits=3), "(", format(adjpval, scientific=T, digits=3), ")")
-  } else {
-   plotTitle <- paste0(gene)
- }
+  diff <- survdiff(formula = Surv(get(time), get(status)) ~ exprStatus,data = metadata)
+  pval <- pchisq(diff$chisq, length(diff$n)-1, lower.tail = FALSE)
+  adjpval <- p.adjust(pval, method = "BH", n = length(gene))
+  plotTitle <- paste0(paste(gene, collapse = " | "), " P-val(Adj) :", format(pval, scientific=T, digits=3), "(", format(adjpval, scientific=T, digits=3), ")")
+
 
 
   # Step5: Generate plot ----------------------------------
