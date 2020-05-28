@@ -1,5 +1,7 @@
 # script to scan a dataset to get genes with significant difference in survival, based on expression
 # also outputs which group has poor survival
+# plots KM plot if survival probability of any one group is 0
+# does not plot for those genes with only 1 sample in either of the group with 0 survival probability
 # setwd("~/KP/significantSurvival")
 
 library(reshape2)
