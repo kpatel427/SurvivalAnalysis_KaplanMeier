@@ -128,6 +128,7 @@ survivalKM <- function(exprData, metadata, gene, endpoint, Risk) {
     fit <- survfit(Surv(get(time), get(status)) ~ exprStatus, data = metadata)
     # Median survival is the time corresponding to a survival probability of 0.5 (50% survival)
     
+    # to get survival probabilty at a specific time
     summ <- summary(fit, times = 4500, extend = TRUE)
     #df <- data.frame('strata'=summ$strata, 'survProb' = summ$surv)
 
