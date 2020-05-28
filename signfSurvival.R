@@ -19,7 +19,7 @@ result <- data.frame()
 
 
 # loop to call function -------------------------
-for(i in row.names(TARGET_NBL_FPKM_PST_data)){
+for(i in row.names(expr_data)){
   print(i)
   
   # function call = returns KM plot
